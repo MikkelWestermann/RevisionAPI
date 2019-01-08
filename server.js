@@ -6,28 +6,27 @@ const knex = require('knex')
 
 const app = express();
 
+// const db = knex({
+//   client: 'pg',
+//   connection: {
+//     host : '127.0.0.1',
+//     user : 'mikkelwestermann',
+//     password : '',
+//     database : 'revision'
+//   }
+// });
+
 const db = knex({
   client: 'pg',
   connection: {
-    host : '127.0.0.1',
-    user : 'mikkelwestermann',
-    password : '',
-    database : 'revision'
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
   }
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-
-const users = [
-  {
-    id: 1,
-    email: 'bob@gmail.com',
-    username: 'bob',
-    password: '123'
-  }
-]
 
 app.post('/signin', (req, res) => {
   const { accountName, password } = req.body;
